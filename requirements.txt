@@ -6,3 +6,4 @@ openai
 dotenv
 tempfile
 sqlite3
+streamlit
