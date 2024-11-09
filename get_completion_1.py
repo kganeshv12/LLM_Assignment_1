@@ -7,63 +7,63 @@ load_dotenv()
 FIREWORKS_API_KEY = os.getenv("FIREWORKS_API_KEY")
 
 # Point to the local server
-client1 = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")  # html to json
-model = r"lmstudio-ai/gemma-2b-it-GGUF"
+# client1 = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")  # html to json
+# model = r"lmstudio-ai/gemma-2b-it-GGUF"
 
-# def get_completion(prompt):
-#     client = Fireworks(api_key=FIREWORKS_API_KEY)
-
-
-#     response = client.chat.completions.create(
-#     # model="accounts/fireworks/models/mixtral-8x22b-instruct",
-#     model = "accounts/fireworks/models/llama-v3p1-8b-instruct",
-#     messages=[{"role": "user", "content": prompt}],
-#     stream=True,
-#     temperature=0.2
-#     )
-
-#     new_message = {"role": "assistant", "content": ""}
-
-#     for chunk in response:
-#         if chunk.choices[0].delta.content:
-#             # print(chunk.choices[0].delta.content, end="", flush=True)
-#             val = chunk.choices[0].delta.content
-#             new_message["content"] += val
-
-#     # bot_response = response.choices[0].message.content
+def get_completion(prompt):
+    client = Fireworks(api_key=FIREWORKS_API_KEY)
 
 
-#     # return bot_response
-#     return new_message["content"]
-
-def get_completion(prompt, client=client1, model=model):
-    """
-    given the prompt, obtain the response from LLM hosted by LM Studio as a server
-    :param prompt: prompt to be sent to LLM server
-    :return: response from the LLM
-    """
-    prompt = [
-        {"role": "user", "content": prompt}
-    ]
-    completion = client.chat.completions.create(
-        model=model,
-        messages=prompt,
-        temperature=0.0,
-        stream=True,
+    response = client.chat.completions.create(
+    # model="accounts/fireworks/models/mixtral-8x22b-instruct",
+    model = "accounts/fireworks/models/llama-v3p1-8b-instruct",
+    messages=[{"role": "user", "content": prompt}],
+    stream=True,
+    temperature=0.2
     )
 
     new_message = {"role": "assistant", "content": ""}
 
-    for chunk in completion:
+    for chunk in response:
         if chunk.choices[0].delta.content:
             # print(chunk.choices[0].delta.content, end="", flush=True)
             val = chunk.choices[0].delta.content
             new_message["content"] += val
 
-    # print(type()
-    val = new_message["content"]  # .split("<end_of_turn>")[0]
+    # bot_response = response.choices[0].message.content
 
-    return val
+
+    # return bot_response
+    return new_message["content"]
+
+# def get_completion(prompt, client=client1, model=model):
+#     """
+#     given the prompt, obtain the response from LLM hosted by LM Studio as a server
+#     :param prompt: prompt to be sent to LLM server
+#     :return: response from the LLM
+#     """
+#     prompt = [
+#         {"role": "user", "content": prompt}
+#     ]
+#     completion = client.chat.completions.create(
+#         model=model,
+#         messages=prompt,
+#         temperature=0.0,
+#         stream=True,
+#     )
+
+#     new_message = {"role": "assistant", "content": ""}
+
+#     for chunk in completion:
+#         if chunk.choices[0].delta.content:
+#             # print(chunk.choices[0].delta.content, end="", flush=True)
+#             val = chunk.choices[0].delta.content
+#             new_message["content"] += val
+
+#     # print(type()
+#     val = new_message["content"]  # .split("<end_of_turn>")[0]
+
+#     return val
 
 
 if __name__ == '__main__':
