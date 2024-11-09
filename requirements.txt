@@ -4,6 +4,5 @@ pandas
 fireworks
 openai
 python-dotenv
-tempfile
-sqlite3
 streamlit
+sqlite3
