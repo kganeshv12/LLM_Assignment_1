@@ -76,27 +76,37 @@ def generate_response(question):
 
 st.title("Chat with Election Data")
 
-# Define example questions organized by categories
-example_questions = {
-    "Custom Question": "",
-    "Demographics Analysis": {
-        "Gender Distribution - Contestants": "Give me count of all the male candidates who have contested the elections and count of all female candidates who have contested the Maharashtra 2019 elections"
-    },
-    "Party Performance": {
-        "Overall Performance": "How did BJP political party perform in the parlimentary elections 2024?"
-    },
-    "Electoral Statistics": {
-        "Winning Margins": "Which constituencies had the closest winning margins in the 2019 parlimentary elections?",
-        "Voter Turnout": "What was the average voter turnout across different regions in Maharashtra 2019 elections?",
-    }
+# Define example questions organized by categories with proper nesting
+example_categories = {
+    "Demographics Analysis": [
+        {
+            "name": "Gender Distribution - Contestants",
+            "question": "Give me count of all the male candidates who have contested the elections and count of all female candidates who have contested the Maharashtra 2019 elections"
+        }
+    ],
+    "Party Performance": [
+        {
+            "name": "Overall Performance",
+            "question": "How did BJP political party perform in the parlimentary elections 2024?"
+        }
+    ],
+    "Electoral Statistics": [
+        {
+            "name": "Winning Margins",
+            "question": "Which constituencies had the closest winning margins in the 2019 parlimentary elections?"
+        },
+        {
+            "name": "Voter Turnout",
+            "question": "What was the average voter turnout across different regions in Maharashtra 2019 elections?"
+        }
+    ]
 }
 
-# Flatten the dictionary for the selectbox while keeping category headers
-flattened_questions = ["Custom Question"]
-for category, questions in example_questions.items():
-    if isinstance(questions, dict):
-        for q_name, q_text in questions.items():
-            flattened_questions.append(f"{category} - {q_name}")
+# Create a list of all options including custom question
+options = ["Custom Question"]
+for category, questions in example_categories.items():
+    for q in questions:
+        options.append(f"{category} - {q['name']}")
 
 # Create two columns
 col1, col2 = st.columns([2, 1])
@@ -105,19 +115,27 @@ with col1:
     # Add a select box for example questions
     selected_option = st.selectbox(
         "Select a question or choose 'Custom Question':",
-        flattened_questions
+        options
     )
 
-    # Text input field that changes based on selection
+    # Initialize chat input
     if selected_option == "Custom Question":
         chat_input = st.text_input("Enter your Question:", "")
     else:
-        # Find the question text from the nested dictionary
+        # Parse the selected option
         category = selected_option.split(" - ")[0]
         question_name = selected_option.split(" - ")[1]
+        
+        # Find the matching question
+        question_text = ""
+        for questions in example_categories[category]:
+            if questions["name"] == question_name:
+                question_text = questions["question"]
+                break
+        
         chat_input = st.text_input(
             "Enter your Question:", 
-            value=example_questions[category][question_name]
+            value=question_text
         )
 
 with col2:
@@ -142,23 +160,26 @@ with col2:
 if chat_input:
     # Add a spinner while processing
     with st.spinner('Analyzing your question...'):
-        response_text, df = generate_response(chat_input)
-        
-        # Create sections for different outputs
-        st.subheader("📊 Analysis")
-        st.write(response_text)
-        
-        st.subheader("🔢 Data")
-        st.dataframe(df)
-        
-        # Visualization section
-        render_plot(df)
-        if os.path.exists("output_plot.png"):
-            st.subheader("📈 Visualization")
-            st.image("output_plot.png")
-            os.remove("output_plot.png")
-        else:
-            st.warning("No visualization available for this query.")
+        try:
+            response_text, df = generate_response(chat_input)
+            
+            # Create sections for different outputs
+            st.subheader("📊 Analysis")
+            st.write(response_text)
+            
+            st.subheader("🔢 Data")
+            st.dataframe(df)
+            
+            # Visualization section
+            render_plot(df)
+            if os.path.exists("output_plot.png"):
+                st.subheader("📈 Visualization")
+                st.image("output_plot.png")
+                os.remove("output_plot.png")
+            else:
+                st.warning("No visualization available for this query.")
+        except Exception as e:
+            st.error(f"An error occurred while processing your request: {str(e)}")
 
 # Add footer
 st.markdown("---")
