@@ -33,3 +33,14 @@ All components are coordinated by an **Orchestrator** that manages the workflow.
 - Performance metrics computation
 - Streamlit-based user interface
 
+## Demo
+
+- ![Demo_1](/Others/Output_3.png)
+- ![Link to Demo Video](https://github.com/kganeshv12/M_LLM_Assignment_1/blob/main/Others/Video_Recording.mp4)
+- ![Link to Demo Video](https://github.com/kganeshv12/M_LLM_Assignment_1/blob/main/Others/Video_Recording_2.mp4)
+
+### Crafted by :
+
+- Ganesh Vaidyanathan K
+- Sowmesh Sharma
+- Shauryadeep Sinh
