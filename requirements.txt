@@ -3,7 +3,7 @@ numpy
 pandas
 fireworks
 openai
-dotenv
+python-dotenv
 tempfile
 sqlite3
 streamlit
