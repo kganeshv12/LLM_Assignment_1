@@ -10,35 +10,33 @@ FIREWORKS_API_KEY = os.getenv("FIREWORKS_API_KEY")
 client1 = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")  # html to json
 model = r"lmstudio-ai/gemma-2b-it-GGUF"
 
-# model = "MaziyarPanahi/Mistral-7B-Instruct-v0.3-GGUF/Mistral-7B-Instruct-v0.3.Q4_K_M.gguf:2"
-
-def get_completion(prompt):
-    client = Fireworks(api_key=FIREWORKS_API_KEY)
+# def get_completion(prompt):
+#     client = Fireworks(api_key=FIREWORKS_API_KEY)
 
 
-    response = client.chat.completions.create(
-    # model="accounts/fireworks/models/mixtral-8x22b-instruct",
-    model = "accounts/fireworks/models/llama-v3p1-8b-instruct",
-    messages=[{"role": "user", "content": prompt}],
-    stream=True,
-    temperature=0.2
-    )
+#     response = client.chat.completions.create(
+#     # model="accounts/fireworks/models/mixtral-8x22b-instruct",
+#     model = "accounts/fireworks/models/llama-v3p1-8b-instruct",
+#     messages=[{"role": "user", "content": prompt}],
+#     stream=True,
+#     temperature=0.2
+#     )
 
-    new_message = {"role": "assistant", "content": ""}
+#     new_message = {"role": "assistant", "content": ""}
 
-    for chunk in response:
-        if chunk.choices[0].delta.content:
-            # print(chunk.choices[0].delta.content, end="", flush=True)
-            val = chunk.choices[0].delta.content
-            new_message["content"] += val
+#     for chunk in response:
+#         if chunk.choices[0].delta.content:
+#             # print(chunk.choices[0].delta.content, end="", flush=True)
+#             val = chunk.choices[0].delta.content
+#             new_message["content"] += val
 
-    # bot_response = response.choices[0].message.content
+#     # bot_response = response.choices[0].message.content
 
 
-    # return bot_response
-    return new_message["content"]
+#     # return bot_response
+#     return new_message["content"]
 
-def get_completion_og(prompt, client=client1, model=model):
+def get_completion(prompt, client=client1, model=model):
     """
     given the prompt, obtain the response from LLM hosted by LM Studio as a server
     :param prompt: prompt to be sent to LLM server
