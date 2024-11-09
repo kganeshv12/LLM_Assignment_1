@@ -1,0 +1,8 @@
+matplotlib.pyplot
+numpy
+pandas
+fireworks.client
+openai
+dotenv
+tempfile
+sqlite3
