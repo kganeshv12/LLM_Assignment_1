@@ -1,7 +1,7 @@
-matplotlib.pyplot
+matplotlib
 numpy
 pandas
-fireworks.client
+fireworks
 openai
 dotenv
 tempfile
