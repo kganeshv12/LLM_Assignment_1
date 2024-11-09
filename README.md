@@ -35,10 +35,11 @@ All components are coordinated by an **Orchestrator** that manages the workflow.
 
 ## Demo
 
-- ![Demo_1](/Others/output_4.jpeg)
+- ![Demo_1](/Others/output_4.png)
+- ![Demo_1](/Others/output_5.png)
 - ![Demo_2](/Others/output_3.png)
 - https://github.com/kganeshv12/M_LLM_Assignment_1/Others/Video_Recording.mp4
-- !https://github.com/kganeshv12/M_LLM_Assignment_1/Others/Video_Recording_2.mp4
+- https://github.com/kganeshv12/M_LLM_Assignment_1/Others/Video_Recording_2.mp4
 
 ### Crafted by :
 
